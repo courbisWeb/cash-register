@@ -1,16 +1,28 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { DateComponent } from './components/date/date.component';
+import { DatePipe } from '@angular/common';
+import { HeaderComponent } from './components/header/header.component';
+import { CommodityListComponent } from './components/commodity-list/commodity-list.component';
+import { FormsModule } from '@angular/forms';
+import { CashRegisterComponent } from './components/cash-register/cash-register.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DateComponent,
+    HeaderComponent,
+    CommodityListComponent,
+    CashRegisterComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

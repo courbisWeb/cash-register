@@ -1,0 +1,16 @@
+<div class="row p-2">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let commodity of commodityList">
+            <td>{{commodity.code}}</td>
+            <td>{{commodity.name}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
