@@ -4,4 +4,5 @@ export class Commodity{
     price: number;
     type: string;
     supplier: string;
+    stock: number;
 }

@@ -1,0 +1,1 @@
+export { ICashRegister } from './cash-register.interface';

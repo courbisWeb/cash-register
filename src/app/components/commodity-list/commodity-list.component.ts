@@ -31,6 +31,7 @@ export class CommodityListComponent implements OnInit {
       commodity.price= 9990;
       commodity.supplier= 'Supplier example ' + i;
       commodity.type= 'Type example ' + i;
+      commodity.stock= i;
       this.commodityList.push(commodity);
     }
 
@@ -40,7 +41,17 @@ export class CommodityListComponent implements OnInit {
       commodity.price= 10500;
       commodity.supplier= 'La tía de la esquina';
       commodity.type= 'Alimento';
+      commodity.stock= 90;
       this.commodityList.push(commodity);
+
+      const commodity2: Commodity= new Commodity();
+      commodity.code= 'A999999999';
+      commodity.name= 'Ketchup añejado en roble curtido con las más finas cenizas del hermitaño';
+      commodity.price= 10500;
+      commodity.supplier= 'La tía de la esquina';
+      commodity.type= 'Alimento';
+      commodity.stock= 90;
+      this.commodityList.push(commodity2);
 
     this.commodityListFiltered= this.commodityList;
   }

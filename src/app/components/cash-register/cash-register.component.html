@@ -4,12 +4,20 @@
         <tr>
             <th scope="col">Código</th>
             <th scope="col">Descripción</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Sub total</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let commodity of commodityList">
-            <td>{{commodity.code}}</td>
-            <td>{{commodity.name}}</td>
+            <td>{{commodity.commodity.code}}</td>
+            <td>{{commodity.commodity.name}}</td>
+            <td>{{commodity.commodity.price}}</td>
+            <td><input type="number" name="" id="" value="{{commodity.amount}}" [(ngModel)]="commodity.amount" (change)="validateStock(commodity)" style="width: 66px;" class="text-center"></td>
+            <td>{{commodity.subTotal}}</td>
+            <td class="btn" (click)="remove(commodity)">(-)</td>
         </tr>
         </tbody>
     </table>
