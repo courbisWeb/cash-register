@@ -1,8 +1,8 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ICashRegister } from 'src/app/interfaces';
 import { Commodity } from 'src/app/models';
-import { CommodityEventService } from 'src/app/services';
+import { CashRegisterEventService, CommodityEventService } from 'src/app/services';
 
 @Component({
   selector: 'app-cash-register',
@@ -15,9 +15,9 @@ export class CashRegisterComponent implements OnInit, OnDestroy {
 
   private commodityEventServiceSubscription: Subscription;
 
-  @ViewChild('amountInput', {static: true}) amountInput: ElementRef;
-
-  constructor(private commodityEventService: CommodityEventService) { }
+  constructor(
+    private commodityEventService: CommodityEventService,
+    private cashRegisterEventService: CashRegisterEventService) { }
 
   ngOnInit(): void {
     console.log('CASH-REGISTER COMPONENT');
@@ -28,7 +28,6 @@ export class CashRegisterComponent implements OnInit, OnDestroy {
   }
 
   public addCommodity(commodity: Commodity): void {
-    // this.commodityList.push(commodity);
 
     let flagExists: boolean= false;
 
@@ -38,6 +37,7 @@ export class CashRegisterComponent implements OnInit, OnDestroy {
         this.validateStock(c);
         c.subTotal= c.amount*c.commodity.price
         flagExists= true;
+        this.cashRegisterEventService.cashRegisterEventEmmiter(this.commodityList);
         return;
       }
     });
@@ -45,6 +45,7 @@ export class CashRegisterComponent implements OnInit, OnDestroy {
     if ( !flagExists && commodity.stock> 0){
       this.commodityList.push({commodity:commodity, amount:1, subTotal: commodity.price});
     }
+    this.cashRegisterEventService.cashRegisterEventEmmiter(this.commodityList);
 
   }
 
@@ -55,15 +56,25 @@ export class CashRegisterComponent implements OnInit, OnDestroy {
       this.commodityList.forEach(c=> {
         if ( c.commodity.code=== commodity.commodity.code ) {
           c.amount= commodity.commodity.stock;
+          c.subTotal= c.amount*c.commodity.price
+          this.cashRegisterEventService.cashRegisterEventEmmiter(this.commodityList);
           return;
         }
       });
-    }
-
-    if ( commodity.amount<= 0 ) {
+    } else if ( commodity.amount<= 0 ) {
       this.commodityList.forEach(c=> {
         if ( c.commodity.code=== commodity.commodity.code ) {
           c.amount= 1;
+          c.subTotal= c.amount*c.commodity.price
+          this.cashRegisterEventService.cashRegisterEventEmmiter(this.commodityList);
+          return;
+        }
+      });
+    } else {
+      this.commodityList.forEach(c=> {
+        if ( c.commodity.code=== commodity.commodity.code ) {
+          c.subTotal= c.amount*c.commodity.price
+          this.cashRegisterEventService.cashRegisterEventEmmiter(this.commodityList);
           return;
         }
       });
@@ -74,6 +85,8 @@ export class CashRegisterComponent implements OnInit, OnDestroy {
     this.commodityList.forEach((c,i)=> {
       if ( c.commodity.code=== commodity.commodity.code ) {
         this.commodityList.splice(i,1);
+        this.cashRegisterEventService.cashRegisterEventEmmiter(this.commodityList);
+        return;
       }
     })
   }
