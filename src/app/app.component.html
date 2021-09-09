@@ -1,14 +1,29 @@
-<app-header></app-header>
+<div class="container">
+  <app-header></app-header>
 
   <div class="row text-center">
-    <div class="col-4 module">
+    <div class="col-4 module border border-primary">
       <app-commodity-list
       (commoditySelectedEvent)="commodityClick($event)"></app-commodity-list>
     </div>
-    <div class="col-6 module">
+    <div class="col-8 module border border-primary">
       <app-cash-register></app-cash-register>
     </div>
-    <div class="col-2">
-      <h3>Espacio reservado para tipo de pago</h3>
+  </div>
+
+  <div class="row">
+    <div class="col-2 border border-primary">
+      <app-payment-method></app-payment-method>
+    </div>
+    <div class="col-10 border border-primary">
+      <app-amounts></app-amounts>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-12 text-center p-0">
+      <h3 class="pointer bg-primary p-3 w-100 m-0">Realizar venta</h3>
+    </div>
+  </div>
+
+</div>
